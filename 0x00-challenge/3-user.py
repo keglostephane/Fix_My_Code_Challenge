@@ -13,21 +13,20 @@ class User():
     - password: private string hash in MD5
     """
 
-    __password = None
-
     def __init__(self):
         """
         Initialize a new user:
         - assigned an unique `id`
         """
         self.id = str(uuid.uuid4())
+        self.__password = None
 
     @property
     def password(self):
         """
         Password getter
         """
-        return User.__password
+        return self.__password
 
     @password.setter
     def password(self, pwd):
@@ -38,9 +37,9 @@ class User():
         - Hash `pwd` in MD5 before assign to `__password`
         """
         if pwd is None or type(pwd) is not str:
-            User.__password = None
+            self.__password = None
         else:
-            User.__password = hashlib.md5(pwd.encode()).hexdigest().lower()
+            self.__password = hashlib.md5(pwd.encode()).hexdigest().lower()
 
     def is_valid_password(self, pwd):
         """
@@ -52,9 +51,9 @@ class User():
         """
         if pwd is None or type(pwd) is not str:
             return False
-        if User.__password is None:
+        if self.__password is None:
             return False
-        return hashlib.md5(pwd.encode()).hexdigest().upper() == User.__password
+        return hashlib.md5(pwd.encode()).hexdigest().upper() == self.__password
 
 
 if __name__ == '__main__':
@@ -84,7 +83,7 @@ if __name__ == '__main__':
     if user_2.password is not None:
         print("User.password should be None if setter to an integer")
 
-    if not user_1.is_valid_password(u_pwd):
+    if user_1.is_valid_password(u_pwd):
         print("is_valid_password should return True if it's the right \
 password")
 
