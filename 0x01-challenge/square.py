@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Square Module"""
+
 
 class square():
     """Represent a square"""
